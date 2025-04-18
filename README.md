@@ -1,0 +1,1 @@
+# contract-partner-category-service
