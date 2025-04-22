@@ -32,12 +32,12 @@ public class CategoryApiController {
         return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SELECT_SUCCESS.getCode(), SuccessCode.SELECT_SUCCESS.getMessage(), categoryNames));
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<SuccessResponse<Map<String, Boolean>>> categoryStandardCheck(@PathVariable("id") Long id) {
-//        Boolean existence = categoryService.checkStandardExistence(id);
-//
-//        return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SELECT_SUCCESS.getCode(), SuccessCode.SELECT_SUCCESS.getMessage(), Map.of("result", existence)));
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<SuccessResponse<Map<String, Boolean>>> categoryStandardCheck(@PathVariable("id") Long id) {
+        Boolean existence = categoryService.checkStandardExistence(id);
+
+        return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SELECT_SUCCESS.getCode(), SuccessCode.SELECT_SUCCESS.getMessage(), Map.of("result", existence)));
+    }
 
     @PostMapping
     public ResponseEntity<SuccessResponse<String>> categoryAdd(@RequestBody String categoryName) {

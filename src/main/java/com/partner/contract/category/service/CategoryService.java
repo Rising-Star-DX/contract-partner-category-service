@@ -1,5 +1,6 @@
 package com.partner.contract.category.service;
 
+import com.partner.contract.category.client.StandardClient;
 import com.partner.contract.category.domain.Category;
 import com.partner.contract.category.dto.CategoryListResponseDto;
 import com.partner.contract.category.dto.CategoryNameListResponseDto;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final StandardClient standardClient;
 
     public List<CategoryListResponseDto> findCategoryList(String name) {
         return categoryRepository.findCategoryListOrderByName(name);
@@ -31,11 +33,11 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-//    public Boolean checkStandardExistence(Long id) {
-//        categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
-//
-//        return categoryRepository.findWithStandardById(id) > 0;
-//    }
+    public Boolean checkStandardExistence(Long id) {
+        categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
+
+        return standardClient.existsByCategory(id).getStandardExists();
+    }
 
     public void addCategory(String categoryName) {
         Category existedCategory = categoryRepository.findByName(categoryName);
