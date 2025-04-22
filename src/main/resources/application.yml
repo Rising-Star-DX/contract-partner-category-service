@@ -50,7 +50,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # 유레카 서버 주소
+      defaultZone: http://${secret.spring.ip}:8761/eureka/ # 유레카 서버 주소
 
 management:
   endpoints:
