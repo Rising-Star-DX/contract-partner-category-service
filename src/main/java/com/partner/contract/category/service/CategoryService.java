@@ -1,6 +1,6 @@
 package com.partner.contract.category.service;
 
-import com.partner.contract.category.client.StandardClient;
+import com.partner.contract.category.client.StandardFeignClient;
 import com.partner.contract.category.domain.Category;
 import com.partner.contract.category.dto.CategoryListResponseDto;
 import com.partner.contract.category.dto.CategoryNameListResponseDto;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final StandardClient standardClient;
+    private final StandardFeignClient standardClient;
 
     public List<CategoryListResponseDto> findCategoryList(String name) {
         return categoryRepository.findCategoryListOrderByName(name);
