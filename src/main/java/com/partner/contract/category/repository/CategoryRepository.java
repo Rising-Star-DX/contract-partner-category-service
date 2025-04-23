@@ -2,6 +2,7 @@ package com.partner.contract.category.repository;
 
 import com.partner.contract.category.domain.Category;
 import com.partner.contract.category.dto.CategoryListResponseDto;
+import com.partner.contract.category.dto.CategoryNameListResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -40,4 +41,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("select c from Category c where c.name like %:name% order by c.name")
     List<Category> findByNameContaining(String name);
+
+    @Query("select new com.partner.contract.category.dto.CategoryNameListResponseDto(c.id, c.name) from Category c")
+    List<CategoryNameListResponseDto> findAllIdAndName();
 }

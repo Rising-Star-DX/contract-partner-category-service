@@ -2,7 +2,7 @@ package com.partner.contract.category.service;
 
 import com.partner.contract.category.client.AgreementFeignClient;
 import com.partner.contract.category.client.StandardFeignClient;
-import com.partner.contract.category.client.dto.DocumentCountResponse;
+import com.partner.contract.category.client.dto.DocumentCountResponseDto;
 import com.partner.contract.category.domain.Category;
 import com.partner.contract.category.dto.CategoryListResponseDto;
 import com.partner.contract.category.dto.CategoryNameListResponseDto;
@@ -34,15 +34,15 @@ public class CategoryService {
                 .collect(Collectors.toList());
 
         // Bulk 요청
-        List<DocumentCountResponse> standardCounts = standardFeignClient.getStandardCountByCategoryId();
-        List<DocumentCountResponse> agreementCounts = agreementFeignClient.getAgreementsCountByCategoryId();
+        List<DocumentCountResponseDto> standardCounts = standardFeignClient.getStandardCountByCategoryId();
+        List<DocumentCountResponseDto> agreementCounts = agreementFeignClient.getAgreementsCountByCategoryId();
 
         // Map으로 변환 (성능 향상)
         Map<Long, Long> standardCountMap = standardCounts.stream()
-                .collect(Collectors.toMap(DocumentCountResponse::getId, DocumentCountResponse::getCount));
+                .collect(Collectors.toMap(DocumentCountResponseDto::getId, DocumentCountResponseDto::getCount));
 
         Map<Long, Long> agreementCountMap = agreementCounts.stream()
-                .collect(Collectors.toMap(DocumentCountResponse::getId, DocumentCountResponse::getCount));
+                .collect(Collectors.toMap(DocumentCountResponseDto::getId, DocumentCountResponseDto::getCount));
 
         return categories.stream()
                 .map(category -> CategoryListResponseDto.builder()
@@ -111,5 +111,9 @@ public class CategoryService {
         }
 
         categoryRepository.deleteById(id);
+    }
+
+    public List<CategoryNameListResponseDto> findAllCategoryIdAndName() {
+        return categoryRepository.findAllIdAndName();
     }
 }

@@ -3,6 +3,6 @@ package com.partner.contract.category.client.dto;
 import lombok.Data;
 
 @Data
-public class DocumentExistsResponse {
+public class DocumentExistsResponseDto {
     private Boolean exists;
 }
