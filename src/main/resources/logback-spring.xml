@@ -13,15 +13,16 @@
     <springProfile name="prod">
         <!-- Spring application.yml로부터 환경변수 가져오기 -->
         <springProperty name="DISCORD_WEBHOOK_URL" source="discord.webhook.url"/>
+        <springProperty name="SERVICE_NAME" source="spring.application.name" />
 
         <!-- 디스코드 Appender -->
         <appender name="DISCORD" class="com.github.napstr.logback.DiscordAppender">
             <webhookUri>${DISCORD_WEBHOOK_URL}</webhookUri>
             <layout class="ch.qos.logback.classic.PatternLayout">
-                <pattern>### 📢 [%-5level] 문제 발생\n- 시간: %d{HH:mm:ss}\n- 위치: [%thread] %logger{36}\n- 에러 코드: `%msg`%n```%ex{full}```</pattern>
+                <pattern>### 📢 [%-5level] ${SERVICE_NAME} 에서 문제 발생 \n- 시간: %d{HH:mm:ss}\n- 위치: [%thread] %logger{36}\n- 에러 코드: `%msg`%n```%ex{full}```</pattern>
             </layout>
             <username>에러 났어 개발자야</username>
-            <avatarUrl>https://i.namu.wiki/i/74_Qdq--rrYR8ENP2KYS2RLQe__bOjz6Pm1cg6tKaySicyTctS3kXpN7-XXjTjp-s3unVNtbce0avBP-6dMRzH349Hh7ihF_cyxlFHrjZNVu4ewcu-tmI89i4C2O_2sRDFoUQaFWgPK8kXcDXeTx8g.webp</avatarUrl>
+            <avatarUrl>https://img.insight.co.kr/static/2019/02/27/700/872zn06d01q44v8q900u.jpg</avatarUrl>
             <tts>false</tts>
         </appender>
 
