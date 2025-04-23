@@ -1,5 +1,6 @@
 package com.partner.contract.category.service;
 
+import com.partner.contract.category.client.AgreementFeignClient;
 import com.partner.contract.category.client.StandardFeignClient;
 import com.partner.contract.category.domain.Category;
 import com.partner.contract.category.dto.CategoryListResponseDto;
@@ -19,11 +20,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final StandardFeignClient standardClient;
+    private final StandardFeignClient standardFeignClient;
+    private final AgreementFeignClient agreementFeignClient;
 
-    public List<CategoryListResponseDto> findCategoryList(String name) {
-        return categoryRepository.findCategoryListOrderByName(name);
-    }
+//    public List<CategoryListResponseDto> findCategoryList(String name) {
+//        return categoryRepository.findCategoryListOrderByName(name);
+//    }
 
     public List<CategoryNameListResponseDto> findCategoryNameList() {
         return categoryRepository
@@ -36,7 +38,13 @@ public class CategoryService {
     public Boolean checkStandardExistence(Long id) {
         categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
 
-        return standardClient.existsByCategory(id).getStandardExists();
+        return standardFeignClient.existsByCategory(id).getExists();
+    }
+
+    public Boolean checkAgreementExistence(Long id) {
+        categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
+
+        return agreementFeignClient.existsByCategory(id).getExists();
     }
 
     public void addCategory(String categoryName) {
@@ -67,16 +75,13 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-//    public void deleteCategory(Long id) {
-//        Category category = categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
-//
-//        List<Standard> standards = category.getStandardList();
-//        List<Agreement> agreements = category.getAgreementList();
-//
-//        if(!standards.isEmpty() || !agreements.isEmpty()) {
-//            throw new ApplicationException(ErrorCode.CATEGORY_DOCUMENT_ALREADY_EXISTS_ERROR);
-//        }
-//
-//        categoryRepository.deleteById(id);
-//    }
+    public void deleteCategory(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND_ERROR));
+
+        if (checkStandardExistence(id) || checkAgreementExistence(id)) {
+            throw new ApplicationException(ErrorCode.CATEGORY_DOCUMENT_ALREADY_EXISTS_ERROR);
+        }
+
+        categoryRepository.deleteById(id);
+    }
 }

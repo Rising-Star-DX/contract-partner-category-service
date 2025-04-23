@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("standard-service")
-public interface StandardFeignClient {
+@FeignClient("agreement-service")
+public interface AgreementFeignClient {
 
-    @GetMapping("/standards/internal/categories/check/{categoryId}")
+    @GetMapping("/agreements/internal/categories/check/{categoryId}")
     ExistsResponse existsByCategory(@PathVariable("categoryId") Long categoryId);
 }
