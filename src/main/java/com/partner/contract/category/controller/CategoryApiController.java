@@ -18,12 +18,12 @@ import java.util.Map;
 public class CategoryApiController {
     private final CategoryService categoryService;
 
-//    @GetMapping
-//    public ResponseEntity<SuccessResponse<List<CategoryListResponseDto>>> categoryList(@RequestParam(name = "name", required = false, defaultValue = "") String name) {
-//        List<CategoryListResponseDto> categories = categoryService.findCategoryList(name);
-//
-//        return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SELECT_SUCCESS.getCode(), SuccessCode.SELECT_SUCCESS.getMessage(), categories));
-//    }
+    @GetMapping
+    public ResponseEntity<SuccessResponse<List<CategoryListResponseDto>>> categoryList(@RequestParam(name = "name", required = false, defaultValue = "") String name) {
+        List<CategoryListResponseDto> categories = categoryService.findCategoryList(name);
+
+        return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SELECT_SUCCESS.getCode(), SuccessCode.SELECT_SUCCESS.getMessage(), categories));
+    }
 
     @GetMapping("/names")
     public ResponseEntity<SuccessResponse<List<CategoryNameListResponseDto>>> categoryNameList() {

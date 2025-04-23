@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -15,10 +17,10 @@ public class CategoryListResponseDto {
     private Long countOfStandards;
     private Long countOfAgreements;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Builder
-    public CategoryListResponseDto(Long id, String name, Long countOfStandards, Long countOfAgreements, Timestamp createdAt) {
+    public CategoryListResponseDto(Long id, String name, Long countOfStandards, Long countOfAgreements, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.countOfStandards = countOfStandards;

@@ -37,4 +37,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findCategoryNameListOrderByName();
 
     Category findByName(String name);
+
+    @Query("select c from Category c where c.name like %:name% order by c.name")
+    List<Category> findByNameContaining(String name);
 }
