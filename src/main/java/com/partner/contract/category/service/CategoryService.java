@@ -116,4 +116,8 @@ public class CategoryService {
     public List<CategoryNameListResponseDto> findAllCategoryIdAndName() {
         return categoryRepository.findAllIdAndName();
     }
+
+    public CategoryNameListResponseDto findCategoryIdAndName(Long categoryId) {
+        return categoryRepository.findCategoryIdAndName(categoryId);
+    }
 }
